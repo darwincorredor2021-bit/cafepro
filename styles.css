@@ -1,0 +1,154 @@
+:root {
+    --cafe-oscuro: #1b3a1a;
+    --cafe-medio: #2D5A27;
+    --cafe-acento: #F39C12;
+    --cafe-fondo: #f0f4f1;
+}
+
+body {
+    background-color: var(--cafe-fondo);
+    background-image:
+        linear-gradient(180deg, rgba(236, 244, 232, 0.80) 0%, rgba(246, 244, 226, 0.70) 55%, rgba(236, 244, 232, 0.55) 100%),
+        url('fondo-colinas.svg');
+    background-size: cover, cover;
+    background-position: center, center bottom;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Rama de café decorativa (esquina inferior derecha, detrás del contenido) */
+body::before {
+    content: "";
+    position: fixed;
+    right: 0;
+    bottom: 64px;
+    width: min(62vw, 460px);
+    aspect-ratio: 1 / 1;
+    background: url('decor-rama.svg') center / contain no-repeat;
+    transform: scaleX(-1);
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.text-cafe-oscuro { color: var(--cafe-oscuro) !important; }
+.text-cafe-medio { color: var(--cafe-medio) !important; }
+.header-gradient { background: linear-gradient(135deg, var(--cafe-oscuro) 0%, var(--cafe-medio) 100%); }
+
+.btn-accion {
+    background: linear-gradient(to bottom, var(--cafe-medio), var(--cafe-oscuro));
+    color: white;
+    font-weight: 800;
+    text-transform: uppercase;
+    border: none;
+    box-shadow: 0 4px 6px rgba(45, 90, 39, 0.2);
+    transition: all 0.3s ease;
+}
+
+.btn-accion:hover { color: white; opacity: 0.9; }
+.btn-accion:active { transform: translateY(2px); box-shadow: 0 2px 4px rgba(45, 90, 39, 0.2); }
+
+/* Control de navegación SPA nativo */
+.tab-content { display: none; }
+.tab-content.active { display: flex; animation: fadeIn 0.3s ease; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.nav-active { color: var(--cafe-medio) !important; transform: scale(1.05); transition: all 0.2s; }
+
+/* Accesibilidad estricta */
+.form-control:focus, .btn:focus {
+    border-color: var(--cafe-medio);
+    box-shadow: 0 0 0 0.25rem rgba(45, 90, 39, 0.25);
+}
+
+/* Clases propias que reemplazan los estilos en línea */
+.auth-screen { z-index: 1050; }
+.auth-box { max-width: 400px; }
+.main-app { max-width: 600px; }
+.nav-inferior { z-index: 1040; }
+.texto-xs { font-size: 0.75rem; }
+.texto-2xs { font-size: 0.7rem; }
+.texto-3xs { font-size: 0.65rem; }
+.texto-4xs { font-size: 0.6rem; }
+.btn-calendario { background-color: #fffaf0; }
+.cal-icono { transition: transform 0.3s; }
+.cal-icono.rotar-180 { transform: rotate(180deg); }
+.cal-mes { letter-spacing: 1px; }
+.cal-dias { font-size: 0.85rem; }
+.cal-col { width: 14.28%; }
+.cal-dia { width: 28px; height: 28px; }
+.card-luna { background-color: #312e81; }
+.card-balance { background: linear-gradient(to right, #16a34a, #14532d); }
+.girando { animation: girar 0.8s linear infinite; }
+@keyframes girar { to { transform: rotate(360deg); } }
+:focus-visible { outline: 3px solid #ffbf47; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .girando, .tab-content.active { animation: none; } }
+
+/* Fondo de la pantalla de ingreso: colinas cafeteras con neblina */
+.auth-screen {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(23, 64, 26, 0.10)),
+        url('fondo-colinas.svg') center bottom / cover no-repeat;
+    background-color: #cfe5c4;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+/* Ramas de café en las esquinas (inferior izquierda y superior derecha) */
+.auth-screen::before,
+.auth-screen::after {
+    content: "";
+    position: fixed;
+    width: min(70vw, 440px);
+    aspect-ratio: 1 / 1;
+    background: url('decor-rama.svg') center / contain no-repeat;
+    pointer-events: none;
+    z-index: 0;
+}
+.auth-screen::before { left: 0; bottom: 0; }
+.auth-screen::after  { right: 0; top: 0; transform: rotate(180deg); opacity: 0.9; }
+
+.tarjeta-auth {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.93);
+    border-radius: 1.25rem;
+    box-shadow: 0 14px 40px rgba(27, 58, 26, 0.28);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* Logo circular de la tarjeta de ingreso */
+.tarjeta-auth .display-1 {
+    width: 92px;
+    height: 92px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffffff, #e3eedd);
+    box-shadow: 0 6px 16px rgba(27, 58, 26, 0.18), inset 0 0 0 4px rgba(255, 255, 255, 0.8);
+}
+.tarjeta-auth .form-control {
+    border-radius: 0.6rem;
+    border-color: #dbe6d7;
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+/* Tarjetas de la app: más redondeadas y ligeramente translúcidas (como el prototipo) */
+.main-app .card { border-radius: 1rem; }
+.main-app .card:not(.card-luna):not(.bg-info):not(.card-balance) {
+    background-color: rgba(255, 255, 255, 0.90);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+.main-app .card-luna { background-image: linear-gradient(160deg, #4b3fb3 0%, #25205f 100%); }
+.main-app .card.bg-info { background-image: linear-gradient(160deg, #35c9e6 0%, #0e86b4 100%); }
