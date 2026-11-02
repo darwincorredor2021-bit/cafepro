@@ -42,6 +42,7 @@ class GestorCafePro {
         this.obtenerClimaDesdeAPI(); // Consumo de API real (Requisito)
         this.asignarEventos();
         this.despertarServidor();
+        this.actualizarPrecioRealTime();
     }
 
     // Render (plan gratis) duerme el servidor tras 15 min sin visitas y tarda
@@ -555,17 +556,30 @@ class GestorCafePro {
         }
     }
 
-    actualizarPrecioRealTime() {
+   async actualizarPrecioRealTime() {
         const icon = document.getElementById('syncIcon');
         const precioDisp = document.getElementById('precioDisplay');
-
+        
         if (icon) icon.classList.add('girando');
-
-        setTimeout(() => {
-            this.precioReferenciaHoy = Math.floor(Math.random() * (2000000 - 1800000) + 1800000);
-            if (precioDisp) precioDisp.innerText = "$" + this.precioReferenciaHoy.toLocaleString('es-CO');
+        
+        try {
+            // Usa aquí tu enlace real de Render
+            const urlAPI = 'https://cafepro-backend.onrender.com/api/precio';
+            const respuesta = await fetch(urlAPI);
+            const datos = await respuesta.json();
+            
+            if (datos && datos.precioCarga) {
+                // El backend devuelve 'precioCarga' (con C mayúscula) según el nuevo código
+                this.precioReferenciaHoy = datos.precioCarga;
+                if (precioDisp) {
+                    precioDisp.innerText = "$" + this.precioReferenciaHoy.toLocaleString('es-CO');
+                }
+            }
+        } catch (error) {
+            console.error("Error consultando el precio en vivo:", error);
+        } finally {
             if (icon) icon.classList.remove('girando');
-        }, 800);
+        }
     }
 }
 
